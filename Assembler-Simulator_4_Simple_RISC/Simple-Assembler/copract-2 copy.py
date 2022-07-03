@@ -206,6 +206,13 @@ reg={'R0','R1','R2','R3','R4','R5','R6'}
 l=[]
 l=sys.stdin.readlines()
 l=[x.strip().split() for x in l]
+# with open("C:/Users/priya_5c9gi56/OneDrive/Desktop/stdin.txt","r") as f:
+#     data=sys.stdout.readline()
+#     x=data.strip().split()
+#     while len(x)>0:
+#         l.append(x)
+#         data=sys.stdout.readline()
+#         x=data.strip().split()
 c=0
 v=0
 for i in l:
