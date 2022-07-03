@@ -1,3 +1,4 @@
+# dictionary to map instructions with their type
 def category(lst):
     type={'add':1,'sub':1,'mov1':2,'mov2':3,'ld':4,'st':4,'mul':1,'div':3,'rs':2,'ls':2,'xor':1,'or':1,'and':1,'not':3,'cmp':3,'jmp':5,
     'jlt':5,'jgt':5,'je':5,'hlt':6}
