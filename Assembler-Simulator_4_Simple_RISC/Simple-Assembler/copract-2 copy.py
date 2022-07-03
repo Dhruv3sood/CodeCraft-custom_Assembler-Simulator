@@ -202,7 +202,7 @@ def typeF(lst):
     return str+'\n'
 reg={'R0','R1','R2','R3','R4','R5','R6'}
 l=[]
-with open("C:/Users/priya_5c9gi56/OneDrive/Desktop/stdin.txt","r") as f:
+with open("/Users/dhruvsood/Downloads/CSE112-22-Assignment-SimpleAssemblerSimulator-main/Assembler-Simulator_4_Simple_RISC/automatedTesting/tests/assembly/hardBin/test1","r") as f:
     data=f.readline()
     x=data.strip().split()
     while len(x)>0:
