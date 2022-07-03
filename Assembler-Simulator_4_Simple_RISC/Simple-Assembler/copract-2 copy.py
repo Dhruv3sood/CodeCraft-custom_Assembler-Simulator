@@ -1,3 +1,4 @@
+import sys
 # dictionary to map instructions with their type
 def category(lst):
     type={'add':1,'sub':1,'mov1':2,'mov2':3,'ld':4,'st':4,'mul':1,'div':3,'rs':2,'ls':2,'xor':1,'or':1,'and':1,'not':3,'cmp':3,'jmp':5,
@@ -203,13 +204,8 @@ def typeF(lst):
     return str+'\n'
 reg={'R0','R1','R2','R3','R4','R5','R6'}
 l=[]
-with open("/Users/dhruvsood/Downloads/CSE112-22-Assignment-SimpleAssemblerSimulator-main/Assembler-Simulator_4_Simple_RISC/automatedTesting/tests/assembly/hardBin/test1","r") as f:
-    data=f.readline()
-    x=data.strip().split()
-    while len(x)>0:
-        l.append(x)
-        data=f.readline()
-        x=data.strip().split()
+l=sys.stdin.readlines()
+l=[x.strip().split() for x in l]
 c=0
 v=0
 for i in l:
@@ -260,20 +256,19 @@ for i in l:
     if i[0]=='var':
         varadd[i[1]]=binary(c)
         c=c+1
-with open("stdout.txt","w") as f:
-    for i in l:
-        ctg=category(i)
-        if ctg==1:
-            f.write(typeA(i))
-        if ctg==2:
-            f.write(typeB(i))
-        if ctg==3:
-            f.write(typeC(i))
-        if ctg==4:
-            i[2]=varadd.get(i[2])
-            f.write(typeD(i))
-        if ctg==5:
-            i[1]=labeladd.get(i[1])
-            f.write(typeE(i))
-        if ctg==6:
-            f.write(typeF(i))
+for i in l:
+    ctg=category(i)
+    if ctg==1:
+        sys.stdout.write(typeA(i))
+    if ctg==2:
+        sys.stdout.write(typeB(i))
+    if ctg==3:
+        sys.stdout.write(typeC(i))
+    if ctg==4:
+        i[2]=varadd.get(i[2])
+        sys.stdout.write(typeD(i))
+    if ctg==5:
+        i[1]=labeladd.get(i[1])
+        sys.stdout.write(typeE(i))
+    if ctg==6:
+        sys.stdout.write(typeF(i))
