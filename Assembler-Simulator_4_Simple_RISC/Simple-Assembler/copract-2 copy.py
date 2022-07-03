@@ -4,6 +4,8 @@ def category(lst):
     type={'add':1,'sub':1,'mov1':2,'mov2':3,'ld':4,'st':4,'mul':1,'div':3,'rs':2,'ls':2,'xor':1,'or':1,'and':1,'not':3,'cmp':3,'jmp':5,
     'jlt':5,'jgt':5,'je':5,'hlt':6}
     return type.get(lst[0])
+
+# checks if instruction is valid or not
 def instrcheck(lst):
     instr={'add','sub','mov','ld','st','mul','div','rs','ls','xor','or','and','not','cmp','jmp','jlt','jgt','je','hlt','var'}
     c=0
@@ -16,6 +18,9 @@ def instrcheck(lst):
         except IndexError:
             print("error found on line no. "+str(c)+": empty label declaration")
             exit()
+            
+
+# checks if registor name is valid or not            
 def regcheck(insrc,reg):
     c=0
     for i in insrc:
@@ -43,6 +48,9 @@ def regcheck(insrc,reg):
             if (i[2] not in reg):
                 print("error found on line no. "+str(c)+": "+i[2]+" is not a valid register name")
                 exit()
+                
+
+# checks if variable is defined or not                
 def varcheck(src,varname):
     for i in src:
         ctg=category(i)
@@ -50,6 +58,8 @@ def varcheck(src,varname):
             if i[2] not in varname:
                 print("error found on line no. "+str(c)+": "+i[2]+" is an undefined variable")
                 exit()
+                
+# checks if label is defined or not                
 def labelcheck(insrc,labelname):
     c=0
     for i in insrc:
@@ -59,6 +69,8 @@ def labelcheck(insrc,labelname):
             if i[1] not in labelname:
                 print("error found on line no. "+str(c)+": "+i[1]+" is an undefined label")
                 exit()
+                
+# checks if flag registor is used illegally or not                
 def FLAGScheck(insrc):
     c=0
     for i in insrc:
@@ -72,6 +84,8 @@ def FLAGScheck(insrc):
             if i[2]=='FLAGS':
                 print("error found on line no. "+str(c)+": Illegal use of FLAGS register")
                 exit()
+                
+# checks the range of immediate value                
 def immvalcheck(insrc):
     c=0
     for i in insrc:
@@ -81,6 +95,8 @@ def immvalcheck(insrc):
             if int(i[2][1:]) not in range(0,256):
                 print("error found on line no. "+str(c)+": "+i[2][1:]+" is out of range")
                 exit()
+                
+# checks if variable name is used in place of label name and vice versa                
 def varandlabelcheck(insrc,varname,labelname):
     c=0
     for i in insrc:
@@ -94,6 +110,8 @@ def varandlabelcheck(insrc,varname,labelname):
             if i[1] not in labelname and i[1] in varname:
                 print("error found on line no. "+str(c)+": variable "+i[1]+" is used in place of a label")
                 exit()
+                
+# checks if the variables are declared at the beginning or not                
 def vardeclarecheck(varchecksrc,v):
     c=v
     for i in varchecksrc:
@@ -101,11 +119,15 @@ def vardeclarecheck(varchecksrc,v):
         if i[0]=='var':
             print("error found on line no. "+str(c)+": variable "+i[1]+" not declared at the beginning")
             exit()
+            
+# checks is halt is present or not           
 def hltcheck(insrc):
     j=['hlt']
     if j not in insrc:
         print("error: hlt instruction missing")
         exit()
+        
+# checks if halt is not used as the last instruction        
 def hltplacecheck(insrc):
     c=0
     for i in range(0,len(insrc)-1):
@@ -113,6 +135,8 @@ def hltplacecheck(insrc):
         if 'hlt' in insrc[i]:
             print("error found on line no. "+str(c)+": hlt not used as the last instruction")
             exit()
+            
+# checks if the label is used multiple time            
 def labelcountcheck(labelname,srctext):
     s=set(labelname)
     for i in s:
@@ -125,6 +149,8 @@ def labelcountcheck(labelname,srctext):
                 if c>1:
                     print("error found on line no. "+str(line)+": label \'"+str(j[0][0:-1])+"\' has been used earlier")
                     exit()
+                    
+# checks the general syntax of the instructions                    
 def syntaxcheck(srctext):
     instrcheck(srctext)
     c=0
@@ -159,14 +185,20 @@ def syntaxcheck(srctext):
             if len(i)!=2:
                 print("error found on line no. "+str(c)+": General syntax error")
                 exit()
+                
+# dictionary to map instructions with their respective opcode                
 def opc(s):
     opcode={'add':'10000','sub':'10001','mov1':'10010','mov2':'10011','ld':'10100','st':'10101','mul':'10110','div':'10111','rs':'11000',
     'ls':'11001','xor':'11010','or':'11011','and':'11100','not':'11101','cmp':'11110','jmp':'11111','jlt':'01100','jgt':'01101',
     'je':'01111','hlt':'01010'}
     return opcode.get(s)
+
+#dictionary to map registers with their respective address
 def regadd(s):
     regadr={'R0':'000','R1':'001','R2':'010','R3':'011','R4':'100','R5':'101','R6':'110','FLAGS':'111'}
     return regadr.get(s)
+
+#function to convert integer to 8 bit binary
 def binary(c):
     bit=[]
     s=''
@@ -178,6 +210,8 @@ def binary(c):
     for i in range(0,8):
         s=s+bit[7-i]
     return s
+
+#fuctions to return binary codes of respective types of instructions
 def typeA(lst):
     str=''
     str=opc(lst[0])+'00'+regadd(lst[1])+regadd(lst[2])+regadd(lst[3])
@@ -202,7 +236,11 @@ def typeF(lst):
     str=''
     str=opc(lst[0])+'00000000000'
     return str+'\n'
+
+#  MAIN
 reg={'R0','R1','R2','R3','R4','R5','R6'}
+
+#taking input
 l=[]
 l=sys.stdin.readlines()
 l=[x.strip().split() for x in l]
@@ -213,6 +251,8 @@ l=[x.strip().split() for x in l]
 #         l.append(x)
 #         data=sys.stdout.readline()
 #         x=data.strip().split()
+
+
 c=0
 v=0
 for i in l:
