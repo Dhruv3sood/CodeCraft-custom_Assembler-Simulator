@@ -244,6 +244,9 @@ reg={'R0','R1','R2','R3','R4','R5','R6'}
 l=[]
 l=sys.stdin.readlines()
 l=[x.strip().split() for x in l]
+for i in l:
+    if i==[]:
+        l.remove(i)
 # with open("C:/Users/priya_5c9gi56/OneDrive/Desktop/stdin.txt","r") as f:
 #     data=sys.stdout.readline()
 #     x=data.strip().split()
