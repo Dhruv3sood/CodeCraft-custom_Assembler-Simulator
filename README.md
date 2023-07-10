@@ -1,4 +1,4 @@
-# CO_GROUP_PROJECT
+CODE_CRAFT
 
 ### A Simple Assembler, which converts assembly code in binary code according to the given ISA. It also detects error in the assembly input code.
 
